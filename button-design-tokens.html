@@ -37,9 +37,7 @@
     max-width: 1400px; margin: 0 auto 16px;
     display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px;
   }
-  .legend-group {
-    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-  }
+  .legend-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .legend-label {
     font-size: 11px; font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.4px; color: var(--text-secondary); margin-right: 2px;
@@ -53,9 +51,7 @@
     width: 12px; height: 12px; border-radius: 3px;
     border: 1px solid rgba(255,255,255,0.1);
   }
-  .legend-divider {
-    width: 1px; height: 20px; background: var(--border); margin: 0 6px;
-  }
+  .legend-divider { width: 1px; height: 20px; background: var(--border); margin: 0 6px; }
 
   /* Controls */
   .controls {
@@ -98,9 +94,7 @@
   thead th.sorted .sort-arrow { opacity: 1; }
   tbody tr { transition: background 0.1s; }
   tbody tr:hover { background: rgba(120,130,220,0.08) !important; }
-  tbody td {
-    padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle;
-  }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 
   .token-name {
     font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
@@ -108,23 +102,28 @@
     padding: 3px 8px; border-radius: 4px; display: inline-block;
   }
 
-  /* Element pills */
-  .pill {
-    display: inline-block; padding: 3px 10px; border-radius: 12px;
-    font-size: 12px; font-weight: 500;
+  /* Category pills */
+  .cat-pill {
+    display: inline-block; padding: 3px 9px; border-radius: 12px;
+    font-size: 11px; font-weight: 600;
+    font-family: 'SF Mono', 'Fira Code', monospace; letter-spacing: 0.2px;
   }
+  .cat-bg-color    { background: rgba(26,34,64,0.7);  color: #8b9cf0; border: 1px solid rgba(139,156,240,0.2); }
+  .cat-color       { background: rgba(37,26,61,0.7);  color: #b88de8; border: 1px solid rgba(184,141,232,0.2); }
+  .cat-text-size   { background: rgba(18,43,30,0.7);  color: #5ec98a; border: 1px solid rgba(94,201,138,0.2); }
+  .cat-text-weight { background: rgba(43,36,16,0.7);  color: #d4a94e; border: 1px solid rgba(212,169,78,0.2); }
+
+  /* Element pills */
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
   .pill-background { background: rgba(26,34,64,0.6);  color: #8b9cf0; }
-  .pill-text     { background: rgba(18,43,30,0.6);  color: #5ec98a; }
-  .pill-border   { background: rgba(43,36,16,0.6);  color: #d4a94e; }
-  .pill-icon     { background: rgba(37,26,61,0.6);  color: #b88de8; }
-  .pill-fontSize { background: rgba(17,34,51,0.6);  color: #60b0e0; }
-  .pill-fontWeight { background: rgba(46,18,24,0.6); color: #f07070; }
+  .pill-text       { background: rgba(18,43,30,0.6);  color: #5ec98a; }
+  .pill-border     { background: rgba(43,36,16,0.6);  color: #d4a94e; }
+  .pill-icon       { background: rgba(37,26,61,0.6);  color: #b88de8; }
+  .pill-fontSize   { background: rgba(17,34,51,0.6);  color: #60b0e0; }
+  .pill-fontWeight { background: rgba(46,18,24,0.6);  color: #f07070; }
 
   /* Prominence pills */
-  .prom-pill {
-    display: inline-block; padding: 3px 10px; border-radius: 12px;
-    font-size: 12px; font-weight: 500;
-  }
+  .prom-pill { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
   .prom-primary       { background: rgba(26,34,64,0.5);  color: #8b9cf0; }
   .prom-secondary     { background: rgba(37,26,61,0.5);  color: #b88de8; }
   .prom-cta           { background: rgba(18,43,30,0.5);  color: #5ec98a; }
@@ -132,9 +131,7 @@
   .prom-highContrast  { background: rgba(40,40,58,0.5);  color: #c0c0d4; }
 
   /* State badges */
-  .state-badge {
-    font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
-  }
+  .state-badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
   .state-default  { background: #22222e; color: #8b8b9e; }
   .state-hover    { background: #1a2240; color: #8b9cf0; }
   .state-active   { background: #1e2748; color: #a0b0ff; }
@@ -142,20 +139,25 @@
   .state-focus    { background: #2b2410; color: #d4a94e; }
 
   /* Size badges */
-  .size-badge {
-    font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
-    background: #22222e; color: #8b8b9e;
+  .size-badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; background: #22222e; color: #8b8b9e; }
+
+  /* Reference token */
+  .ref-token {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7882dc; background: #1a1a2e;
+    padding: 3px 7px; border-radius: 4px; display: inline-block;
+    border: 1px solid rgba(120,130,220,0.2);
   }
 
-  .val { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #d4a94e; }
   .desc { color: var(--text-secondary); font-size: 12px; white-space: normal; min-width: 160px; }
 
   /* Row tints by prominence */
-  tr[data-prominence="primary"]      { background: rgba(26,34,64,0.2); }
-  tr[data-prominence="secondary"]    { background: rgba(37,26,61,0.2); }
-  tr[data-prominence="cta"]          { background: rgba(18,43,30,0.2); }
-  tr[data-prominence="destructive"]  { background: rgba(46,18,24,0.2); }
-  tr[data-prominence="highContrast"] { background: rgba(40,40,58,0.2); }
+  tr[data-prominence="primary"]     { background: rgba(26,34,64,0.2); }
+  tr[data-prominence="secondary"]   { background: rgba(37,26,61,0.2); }
+  tr[data-prominence="cta"]         { background: rgba(18,43,30,0.2); }
+  tr[data-prominence="destructive"] { background: rgba(46,18,24,0.2); }
+  tr[data-prominence="highContrast"]{ background: rgba(40,40,58,0.2); }
+  tr[data-prominence="type"]        { background: rgba(17,34,51,0.15); }
 
   .naming-ref {
     max-width: 1400px; margin: 20px auto 0; padding: 16px 20px;
@@ -168,17 +170,25 @@
     background: #1e1e34; color: #a0aaf0;
     padding: 2px 6px; border-radius: 3px; font-size: 12px;
   }
-  .naming-ref .convention { margin-bottom: 6px; }
+  .naming-ref .convention { margin-bottom: 8px; }
 </style>
 </head>
 <body>
 
 <div class="page-header">
   <h1>Button Component Tokens</h1>
-  <p>Component-level tokens for the button element. Each references primitive color and type tokens. Covers primary, secondary, CTA, destructive, and high-contrast variants across default and small sizes.</p>
+  <p>Component-level tokens for the button element. Covers background, text, border, and icon colors across all prominences and states, plus font size and weight per size. Each token references a primitive via W3C DTCG notation.</p>
 </div>
 
 <div class="legend">
+  <div class="legend-group">
+    <span class="legend-label">Category</span>
+    <div class="legend-item"><span class="cat-pill cat-bg-color">bg-color</span></div>
+    <div class="legend-item"><span class="cat-pill cat-color">color</span></div>
+    <div class="legend-item"><span class="cat-pill cat-text-size">text-size</span></div>
+    <div class="legend-item"><span class="cat-pill cat-text-weight">text-weight</span></div>
+  </div>
+  <div class="legend-divider"></div>
   <div class="legend-group">
     <span class="legend-label">Prominence</span>
     <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Primary</div>
@@ -200,6 +210,8 @@
 </div>
 
 <div class="controls">
+  <label for="filterCat">Category</label>
+  <select id="filterCat"><option value="">All</option></select>
   <label for="filterProm">Prominence</label>
   <select id="filterProm"><option value="">All</option></select>
   <label for="filterEl">Element</label>
@@ -217,12 +229,13 @@
     <thead>
       <tr>
         <th data-col="0">Token Name <span class="sort-arrow">▲</span></th>
-        <th data-col="1">Type <span class="sort-arrow">▲</span></th>
+        <th data-col="1">Category <span class="sort-arrow">▲</span></th>
         <th data-col="2">Element <span class="sort-arrow">▲</span></th>
         <th data-col="3">Prominence <span class="sort-arrow">▲</span></th>
         <th data-col="4">Size <span class="sort-arrow">▲</span></th>
         <th data-col="5">State <span class="sort-arrow">▲</span></th>
-        <th data-col="6">Description <span class="sort-arrow">▲</span></th>
+        <th data-col="6">References <span class="sort-arrow">▲</span></th>
+        <th data-col="7">Description <span class="sort-arrow">▲</span></th>
       </tr>
     </thead>
     <tbody id="tokenBody"></tbody>
@@ -231,123 +244,208 @@
 
 <div class="naming-ref">
   <h3>Naming Convention Reference</h3>
-  <div class="convention"><strong>Token pattern:</strong> <code>button.{element}.{prominence}[.{size}][.{state}]</code></div>
-  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">Component tokens sit above primitives and below compositions. Default size and default state are omitted — <code>button.background.primary</code> is the default-size, default-state background. Typography elements (fontSize, fontWeight) vary by size but not by state. Color elements (background, text, border, icon) vary by state but share values across sizes.</div>
+  <div class="convention"><strong>Token pattern:</strong> <code>{category}.button.{element}.{prominence}[.{size}][.{state}]</code></div>
+  <div class="convention" style="margin-top:8px;">
+    <strong>Categories</strong> declare the value type:
+    <code>bg-color</code> background fill &nbsp;·&nbsp;
+    <code>color</code> text, border, icon &nbsp;·&nbsp;
+    <code>text-size</code> font size &nbsp;·&nbsp;
+    <code>text-weight</code> font weight
+  </div>
+  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">
+    Default state is omitted — <code>bg-color.button.background.primary</code> is the resting fill.
+    Type elements (fontSize, fontWeight) always carry the size suffix: <code>text-size.button.fontSize.default</code> / <code>text-size.button.fontSize.small</code>.
+    Color elements vary by prominence and state, and are shared across sizes.
+  </div>
+  <div class="convention" style="margin-top:8px;">
+    <strong>References:</strong> Each token is an alias resolved via <code>{"{token.name}"}</code> W3C DTCG notation.
+    Color elements reference <code>color.{"{element}"}.{"{prominence}"}[.{"{state}"}]</code> primitives.
+    Type elements reference <code>type.size.{"{n}"}</code> or <code>type.weight.{"{n}"}</code> primitives.
+  </div>
 </div>
 
 <script>
-// ── Definitions ───────────────────────────────────────────────────────────
-const prominences = ["primary", "secondary", "cta", "destructive", "highContrast"];
-const promLabels  = { primary: "Primary", secondary: "Secondary", cta: "CTA", destructive: "Destructive", highContrast: "High-Contrast" };
-const sizes       = ["default", "small"];
-const states      = ["default", "hover", "active", "disabled", "focus"];
+// ── Reference resolver ────────────────────────────────────────────────────────
+const promToColorProm = {
+  primary:      "primary",
+  secondary:    "secondary",
+  cta:          "positive",
+  destructive:  "negative",
+  highContrast: "inverse",
+};
 
-// Color elements carry states, not sizes
-// Typography elements carry sizes, not states
+const colorElMap = {
+  background: { prim: "background", hasStates: false },
+  text:       { prim: "text",       hasStates: false },
+  border:     { prim: "border",     hasStates: false },
+  icon:       { prim: "icon",       hasStates: true  },
+};
+
+const typeValues = {
+  "fontSize.default":   "type.size.14",
+  "fontSize.small":     "type.size.12",
+  "fontWeight.default": "type.weight.500",
+  "fontWeight.small":   "type.weight.500",
+};
+
+function buildReference(element, prom, stateKey, sizeKey) {
+  const tv = typeValues[`${element}.${sizeKey}`];
+  if (tv) return `{${tv}}`;
+  const mapping = colorElMap[element];
+  if (!mapping) return "—";
+  const cp = promToColorProm[prom] || "primary";
+  let ref = `color.${mapping.prim}.${cp}`;
+  if (mapping.hasStates && stateKey && stateKey !== "default") ref += `.${stateKey}`;
+  return `{${ref}}`;
+}
+
+// ── Category map ──────────────────────────────────────────────────────────────
+const categoryMap = {
+  background: "bg-color",
+  text:       "color",
+  border:     "color",
+  icon:       "color",
+  fontSize:   "text-size",
+  fontWeight: "text-weight",
+};
+const categories = ["bg-color", "color", "text-size", "text-weight"];
+
+// ── Definitions ───────────────────────────────────────────────────────────────
+const prominences = ["primary", "secondary", "cta", "destructive", "highContrast"];
+const promLabels  = {
+  primary:      "Primary",
+  secondary:    "Secondary",
+  cta:          "CTA",
+  destructive:  "Destructive",
+  highContrast: "High-Contrast",
+};
+const sizes  = ["default", "small"];
+const states = ["default", "hover", "active", "disabled", "focus"];
+
 const elements = [
-  { key: "background", label: "Background",   group: "color" },
-  { key: "text",       label: "Text",        group: "color" },
-  { key: "border",     label: "Border",      group: "color" },
-  { key: "icon",       label: "Icon",        group: "color" },
-  { key: "fontSize",   label: "Font Size",   group: "type" },
-  { key: "fontWeight", label: "Font Weight",  group: "type" },
+  { key: "background", label: "Background", group: "color" },
+  { key: "text",       label: "Text",       group: "color" },
+  { key: "border",     label: "Border",     group: "color" },
+  { key: "icon",       label: "Icon",       group: "color" },
+  { key: "fontSize",   label: "Font Size",  group: "type"  },
+  { key: "fontWeight", label: "Font Weight", group: "type" },
 ];
 
-// ── Generate tokens ───────────────────────────────────────────────────────
+// ── Generate tokens ───────────────────────────────────────────────────────────
 const tokens = [];
 
-prominences.forEach(prom => {
-  elements.forEach(el => {
-    if (el.group === "color") {
-      // Color elements: vary by state, no size dimension
+elements.forEach(el => {
+  const cat = categoryMap[el.key];
+
+  if (el.group === "color") {
+    prominences.forEach(prom => {
       states.forEach(st => {
-        const parts = ["button", el.key, prom];
+        const parts = [cat, "button", el.key, prom];
         if (st !== "default") parts.push(st);
         const tokenName = parts.join(".");
         let desc = `Button ${el.label.toLowerCase()} — ${promLabels[prom]}`;
         if (st !== "default") desc += `, ${st} state`;
         tokens.push({
           tokenName,
-          type: "component",
-          element: el.key,
+          category:     cat,
+          element:      el.key,
           elementLabel: el.label,
-          prominence: prom,
-          promLabel: promLabels[prom],
-          size: "—",
-          sizeKey: "",
-          state: st.charAt(0).toUpperCase() + st.slice(1),
-          stateKey: st,
+          prominence:   prom,
+          promLabel:    promLabels[prom],
+          size:         "—",
+          sizeKey:      "",
+          state:        st.charAt(0).toUpperCase() + st.slice(1),
+          stateKey:     st,
+          reference:    buildReference(el.key, prom, st, ""),
           desc,
         });
       });
-    } else {
-      // Type elements: vary by size, no state dimension
-      sizes.forEach(sz => {
-        const parts = ["button", el.key, prom];
-        if (sz !== "default") parts.push(sz);
-        const tokenName = parts.join(".");
-        let desc = `Button ${el.label.toLowerCase()} — ${promLabels[prom]}`;
-        if (sz !== "default") desc += `, ${sz} size`;
-        tokens.push({
-          tokenName,
-          type: "component",
-          element: el.key,
-          elementLabel: el.label,
-          prominence: prom,
-          promLabel: promLabels[prom],
-          size: sz.charAt(0).toUpperCase() + sz.slice(1),
-          sizeKey: sz,
-          state: "—",
-          stateKey: "",
-          desc,
-        });
+    });
+  } else {
+    sizes.forEach(sz => {
+      const parts = [cat, "button", el.key];
+      if (sz !== "default") parts.push(sz);
+      const tokenName = parts.join(".");
+      let desc = `Button ${el.label.toLowerCase()}`;
+      if (sz !== "default") desc += ` — ${sz} size`;
+      tokens.push({
+        tokenName,
+        category:     cat,
+        element:      el.key,
+        elementLabel: el.label,
+        prominence:   "—",
+        promLabel:    "",
+        size:         sz.charAt(0).toUpperCase() + sz.slice(1),
+        sizeKey:      sz,
+        state:        "—",
+        stateKey:     "",
+        reference:    buildReference(el.key, "primary", "default", sz),
+        desc,
       });
-    }
-  });
+    });
+  }
 });
 
-// ── Filters ───────────────────────────────────────────────────────────────
-function populateSelect(id, values) {
+// ── Filters ───────────────────────────────────────────────────────────────────
+function populateSelect(id, pairs) {
   const sel = document.getElementById(id);
-  values.forEach(([v, l]) => {
+  pairs.forEach(([v, l]) => {
     const opt = document.createElement("option");
     opt.value = v; opt.textContent = l;
     sel.appendChild(opt);
   });
 }
-populateSelect("filterProm", prominences.map(p => [p, promLabels[p]]));
-populateSelect("filterEl", elements.map(e => [e.key, e.label]));
-populateSelect("filterSize", sizes.map(s => [s, s.charAt(0).toUpperCase() + s.slice(1)]));
+populateSelect("filterCat",   categories.map(c => [c, c]));
+populateSelect("filterProm",  prominences.map(p => [p, promLabels[p]]));
+populateSelect("filterEl",    elements.map(e => [e.key, e.label]));
+populateSelect("filterSize",  sizes.map(s => [s, s.charAt(0).toUpperCase() + s.slice(1)]));
 populateSelect("filterState", states.map(s => [s, s.charAt(0).toUpperCase() + s.slice(1)]));
 
-// ── Render ────────────────────────────────────────────────────────────────
+// ── Render ────────────────────────────────────────────────────────────────────
 function renderRows(data) {
   const tbody = document.getElementById("tokenBody");
-  tbody.innerHTML = data.map(t => `
-    <tr data-prominence="${t.prominence}">
-      <td><span class="token-name">${t.tokenName}</span></td>
-      <td>${t.type}</td>
-      <td><span class="pill pill-${t.element}">${t.elementLabel}</span></td>
-      <td><span class="prom-pill prom-${t.prominence}">${t.promLabel}</span></td>
-      <td>${t.size !== "—" ? `<span class="size-badge">${t.size}</span>` : '<span style="color:#555568">—</span>'}</td>
-      <td>${t.stateKey ? `<span class="state-badge state-${t.stateKey}">${t.state}</span>` : '<span style="color:#555568">—</span>'}</td>
-      <td class="desc">${t.desc}</td>
-    </tr>
-  `).join("");
+  tbody.innerHTML = data.map(t => {
+    const promAttr   = t.prominence !== "—" ? t.prominence : "type";
+    const promCell   = t.prominence !== "—"
+      ? `<span class="prom-pill prom-${t.prominence}">${t.promLabel}</span>`
+      : '<span style="color:#555568">—</span>';
+    const sizeCell   = t.sizeKey
+      ? `<span class="size-badge">${t.size}</span>`
+      : '<span style="color:#555568">—</span>';
+    const stateCell  = t.stateKey
+      ? `<span class="state-badge state-${t.stateKey}">${t.state}</span>`
+      : '<span style="color:#555568">—</span>';
+    const refCell    = t.reference && t.reference !== "—"
+      ? `<span class="ref-token">${t.reference}</span>`
+      : '<span style="color:#555568">—</span>';
+    return `
+      <tr data-prominence="${promAttr}">
+        <td><span class="token-name">${t.tokenName}</span></td>
+        <td><span class="cat-pill cat-${t.category}">${t.category}</span></td>
+        <td><span class="pill pill-${t.element}">${t.elementLabel}</span></td>
+        <td>${promCell}</td>
+        <td>${sizeCell}</td>
+        <td>${stateCell}</td>
+        <td>${refCell}</td>
+        <td class="desc">${t.desc}</td>
+      </tr>`;
+  }).join("");
   document.getElementById("rowCount").textContent = `${data.length} of ${tokens.length} tokens`;
 }
 
 function applyFilters() {
+  const cat   = document.getElementById("filterCat").value;
   const prom  = document.getElementById("filterProm").value;
   const el    = document.getElementById("filterEl").value;
   const sz    = document.getElementById("filterSize").value;
   const st    = document.getElementById("filterState").value;
   const q     = document.getElementById("searchBox").value.toLowerCase();
   const filtered = tokens.filter(t => {
+    if (cat  && t.category   !== cat)  return false;
     if (prom && t.prominence !== prom) return false;
-    if (el && t.element !== el) return false;
-    if (sz && t.sizeKey !== sz) return false;
-    if (st && t.stateKey !== st) return false;
+    if (el   && t.element    !== el)   return false;
+    if (sz   && t.sizeKey    !== sz)   return false;
+    if (st   && t.stateKey   !== st)   return false;
     if (q && !t.tokenName.includes(q) && !t.desc.toLowerCase().includes(q)) return false;
     return true;
   });
@@ -359,7 +457,7 @@ document.querySelectorAll(".controls select, .controls input").forEach(el => {
   el.addEventListener("input", applyFilters);
 });
 
-// ── Sorting ───────────────────────────────────────────────────────────────
+// ── Sorting ───────────────────────────────────────────────────────────────────
 let sortCol = -1, sortAsc = true;
 document.querySelectorAll("thead th").forEach(th => {
   th.addEventListener("click", () => {
@@ -369,7 +467,7 @@ document.querySelectorAll("thead th").forEach(th => {
     document.querySelectorAll("thead th").forEach(h => h.classList.remove("sorted"));
     th.classList.add("sorted");
     th.querySelector(".sort-arrow").textContent = sortAsc ? "▲" : "▼";
-    const keys = ["tokenName","type","element","prominence","size","state","desc"];
+    const keys = ["tokenName","category","element","prominence","size","state","reference","desc"];
     tokens.sort((a, b) => {
       const va = a[keys[col]], vb = b[keys[col]];
       return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
