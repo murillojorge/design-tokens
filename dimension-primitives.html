@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dimension Primitives</title>
+<style>
+  :root {
+    --surface: #16161e;
+    --border: #2e2e3d;
+    --text-primary: #e2e2ea;
+    --text-secondary: #8b8b9e;
+    --header-bg: #0d0d14;
+    --header-text: #c8c8d8;
+    --radius: 8px;
+    --focus-ring: rgba(120, 130, 220, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: #0e0e15;
+    color: var(--text-primary);
+    padding: 32px 24px;
+    line-height: 1.5;
+  }
+
+  .page-header { max-width: 1400px; margin: 0 auto 24px; }
+  .page-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 14px; color: var(--text-secondary); }
+
+  /* Legend */
+  .legend {
+    max-width: 1400px; margin: 0 auto 16px;
+    display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; align-items: center;
+  }
+  .legend-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.4px; color: var(--text-secondary);
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 4px;
+    background: var(--surface); border: 1px solid var(--border); font-size: 12px;
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* Controls */
+  .controls {
+    max-width: 1400px; margin: 0 auto 16px;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .controls label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .controls select, .controls input[type="search"] {
+    font-size: 13px; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: var(--surface); color: var(--text-primary); outline: none;
+  }
+  .controls select:focus, .controls input:focus {
+    border-color: #7882dc; box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+  .controls input[type="search"] { width: 240px; }
+  .count-badge {
+    margin-left: auto; font-size: 13px;
+    color: var(--text-secondary); font-variant-numeric: tabular-nums;
+  }
+
+  /* Table */
+  .table-wrap {
+    max-width: 1400px; margin: 0 auto;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+  thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--header-bg); color: var(--header-text);
+    font-weight: 600; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 12px 14px; text-align: left;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    user-select: none; cursor: pointer;
+  }
+  thead th:hover { background: #18182a; }
+  thead th .sort-arrow { opacity: 0.4; margin-left: 4px; font-size: 10px; }
+  thead th.sorted .sort-arrow { opacity: 1; }
+  tbody tr { transition: background 0.1s; }
+  tbody tr:hover { background: rgba(120,130,220,0.08) !important; }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+
+  .token-name {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px; color: #a0aaf0; background: #1e1e34;
+    padding: 3px 8px; border-radius: 4px; display: inline-block;
+  }
+
+  /* Type pills */
+  .type-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500;
+  }
+  .type-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  .type-rem-size { background: rgba(60,100,220,0.15); color: #8090f0; border: 1px solid rgba(60,100,220,0.2); }
+  .dot-rem-size  { background: #5070e0; border-radius: 2px; }
+
+  .type-px-size  { background: rgba(180,110,20,0.15); color: #e0a860; border: 1px solid rgba(180,110,20,0.2); }
+  .dot-px-size   { background: #c07820; border-radius: 2px; }
+
+  /* Step badge */
+  .step-badge {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px; padding: 2px 8px; border-radius: 4px;
+    background: #22222e; color: #8b8b9e; font-weight: 500;
+  }
+
+  /* Value cell */
+  .value-empty {
+    font-size: 12px; color: #3d3d55; font-style: italic;
+    padding: 3px 8px; border-radius: 4px;
+    border: 1px dashed #2e2e3d; display: inline-block;
+  }
+
+  .desc { color: var(--text-secondary); font-size: 12px; white-space: normal; min-width: 200px; }
+
+  /* Row tints */
+  tr[data-type="rem-size"] { background: rgba(40,80,200,0.07); }
+  tr[data-type="px-size"]  { background: rgba(180,110,20,0.07); }
+
+  /* Naming ref */
+  .naming-ref {
+    max-width: 1400px; margin: 20px auto 0; padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); font-size: 13px;
+  }
+  .naming-ref h3 { font-size: 14px; margin-bottom: 10px; }
+  .naming-ref code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: #1e1e34; color: #a0aaf0;
+    padding: 2px 6px; border-radius: 3px; font-size: 12px;
+  }
+  .naming-ref .convention { margin-bottom: 8px; color: var(--text-secondary); }
+  .naming-ref .convention strong { color: var(--text-primary); }
+
+  .scale-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .scale-chip {
+    font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace;
+    padding: 2px 8px; border-radius: 4px;
+    background: #1e1e34; color: #a0aaf0;
+    border: 1px solid rgba(160,170,240,0.15);
+  }
+  .scale-chip.extra { border-style: dashed; color: #7882dc; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Dimension Primitives</h1>
+  <p>Raw dimension scale — the foundational sizing tier. Covers rem-based and px-based steps used across spacing, sizing, and layout tokens. Values are to be defined per project.</p>
+</div>
+
+<div class="legend">
+  <span class="legend-label">Type</span>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#5070e0;border-radius:2px;"></div> rem-size
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#c07820;border-radius:2px;"></div> px-size
+  </div>
+</div>
+
+<div class="controls">
+  <label for="filterType">Type</label>
+  <select id="filterType">
+    <option value="">All</option>
+    <option value="rem-size">rem-size</option>
+    <option value="px-size">px-size</option>
+  </select>
+  <input type="search" id="searchBox" placeholder="Search tokens…">
+  <span class="count-badge" id="rowCount"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="tokenTable">
+    <thead>
+      <tr>
+        <th data-col="0">Token Name <span class="sort-arrow">▲</span></th>
+        <th data-col="1">Type <span class="sort-arrow">▲</span></th>
+        <th data-col="2">Step <span class="sort-arrow">▲</span></th>
+        <th data-col="3">Value <span class="sort-arrow">▲</span></th>
+        <th data-col="4">Description <span class="sort-arrow">▲</span></th>
+      </tr>
+    </thead>
+    <tbody id="tokenBody"></tbody>
+  </table>
+</div>
+
+<div class="naming-ref">
+  <h3>Naming Convention Reference</h3>
+  <div class="convention"><strong>Token pattern:</strong> <code>dimension.{type}.{step}</code></div>
+  <div class="convention">
+    Dimension primitives are the lowest sizing tier. Component and layout tokens reference these (e.g. <code>spacing.input.padding.desktop</code> → <code>{dimension.rem-size.100}</code>).
+    Values are intentionally undefined and should be set per project or baseline grid (e.g. 4px, 8px).
+  </div>
+  <div class="convention" style="margin-top:10px;">
+    <strong>rem-size</strong> — relative units, scales with root font size. Steps 0 → 400 (×25) + 500, 600:
+    <div class="scale-grid">
+      <span class="scale-chip">0</span>
+      <span class="scale-chip">025</span><span class="scale-chip">050</span><span class="scale-chip">075</span>
+      <span class="scale-chip">100</span><span class="scale-chip">125</span><span class="scale-chip">150</span>
+      <span class="scale-chip">175</span><span class="scale-chip">200</span><span class="scale-chip">225</span>
+      <span class="scale-chip">250</span><span class="scale-chip">275</span><span class="scale-chip">300</span>
+      <span class="scale-chip">325</span><span class="scale-chip">350</span><span class="scale-chip">375</span>
+      <span class="scale-chip">400</span>
+      <span class="scale-chip extra">500</span>
+      <span class="scale-chip extra">600</span>
+    </div>
+  </div>
+  <div class="convention" style="margin-top:10px;">
+    <strong>px-size</strong> — fixed pixel units, device-independent. Steps 0 → 300 (×25):
+    <div class="scale-grid">
+      <span class="scale-chip">0</span>
+      <span class="scale-chip">025</span><span class="scale-chip">050</span><span class="scale-chip">075</span>
+      <span class="scale-chip">100</span><span class="scale-chip">125</span><span class="scale-chip">150</span>
+      <span class="scale-chip">175</span><span class="scale-chip">200</span><span class="scale-chip">225</span>
+      <span class="scale-chip">250</span><span class="scale-chip">275</span><span class="scale-chip">300</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Scale definitions ─────────────────────────────────────────────────────────
+const remSteps = [0,25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,500,600];
+const pxSteps  = [0,25,50,75,100,125,150,175,200,225,250,275,300];
+
+// Zero-pad steps 25, 50, 75 → 025, 050, 075; all others unchanged
+function fmtStep(n) {
+  return (n > 0 && n < 100) ? String(n).padStart(3, '0') : String(n);
+}
+
+// ── Descriptions ──────────────────────────────────────────────────────────────
+const stepDescs = {
+  0:   "Zero dimension. Removes spacing, collapses element.",
+  25:  "Minimum non-zero step. Hairline gaps, micro-spacing.",
+  50:  "Extra-extra-small. Fine inner spacing, tight rows.",
+  75:  "Extra-small. Compact padding, icon margins.",
+  100: "Small. Standard inline padding, badge sizing.",
+  125: "Small-medium. Comfortable icon size, input padding.",
+  150: "Medium-small. Component inner spacing baseline.",
+  175: "Medium. Balanced component padding.",
+  200: "Medium-large. Card padding, section spacing.",
+  225: "Large-medium. Generous spacing between grouped elements.",
+  250: "Large. Section gaps, spacious layout padding.",
+  275: "Extra-large. Major section separation.",
+  300: "Extra-extra-large. Page-level spacing, hero padding.",
+  325: "2×-large. Wide layout gaps.",
+  350: "2×-large+. Generous container padding.",
+  375: "2×-large++. Very wide layout regions.",
+  400: "3×-large. Maximum standard layout spacing.",
+  500: "4×-large. Extended layout step for wide breakpoints.",
+  600: "Maximum. Largest layout dimension in the scale.",
+};
+
+function getDesc(step) {
+  return stepDescs[step] || "";
+}
+
+// ── Generate tokens ───────────────────────────────────────────────────────────
+const tokens = [];
+
+remSteps.forEach(step => {
+  const s = fmtStep(step);
+  tokens.push({
+    tokenName: `dimension.rem-size.${s}`,
+    typeKey:   "rem-size",
+    typeLabel: "rem-size",
+    step:      s,
+    stepNum:   step,
+    desc:      getDesc(step),
+  });
+});
+
+pxSteps.forEach(step => {
+  const s = fmtStep(step);
+  tokens.push({
+    tokenName: `dimension.px-size.${s}`,
+    typeKey:   "px-size",
+    typeLabel: "px-size",
+    step:      s,
+    stepNum:   step,
+    desc:      getDesc(step),
+  });
+});
+
+// ── Filters ───────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const type = document.getElementById("filterType").value;
+  const q    = document.getElementById("searchBox").value.toLowerCase();
+  const filtered = tokens.filter(t => {
+    if (type && t.typeKey !== type) return false;
+    if (q && !t.tokenName.includes(q) && !t.desc.toLowerCase().includes(q) && !t.step.includes(q)) return false;
+    return true;
+  });
+  renderRows(filtered);
+}
+
+document.querySelectorAll(".controls select, .controls input").forEach(el => {
+  el.addEventListener("change", applyFilters);
+  el.addEventListener("input", applyFilters);
+});
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderRows(data) {
+  document.getElementById("tokenBody").innerHTML = data.map(t => `
+    <tr data-type="${t.typeKey}">
+      <td><span class="token-name">${t.tokenName}</span></td>
+      <td>
+        <span class="type-pill type-${t.typeKey}">
+          <span class="type-dot dot-${t.typeKey}"></span>
+          ${t.typeLabel}
+        </span>
+      </td>
+      <td><span class="step-badge">${t.step}</span></td>
+      <td><span class="value-empty">undefined</span></td>
+      <td class="desc">${t.desc}</td>
+    </tr>
+  `).join("");
+  document.getElementById("rowCount").textContent = `${data.length} of ${tokens.length} tokens`;
+}
+
+// ── Sorting ───────────────────────────────────────────────────────────────────
+let sortCol = -1, sortAsc = true;
+document.querySelectorAll("thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = parseInt(th.dataset.col);
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    document.querySelectorAll("thead th").forEach(h => h.classList.remove("sorted"));
+    th.classList.add("sorted");
+    th.querySelector(".sort-arrow").textContent = sortAsc ? "▲" : "▼";
+    const keys = ["tokenName", "typeKey", "step", "step", "desc"];
+    tokens.sort((a, b) => {
+      const va = a[keys[col]], vb = b[keys[col]];
+      return sortAsc
+        ? va.localeCompare(vb, undefined, { numeric: true })
+        : vb.localeCompare(va, undefined, { numeric: true });
+    });
+    applyFilters();
+  });
+});
+
+renderRows(tokens);
+</script>
+</body>
+</html>
