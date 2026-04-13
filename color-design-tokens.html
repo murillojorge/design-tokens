@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Design Tokens — Polaris + W3C DTCG</title>
+<style>
+  :root {
+    --surface: #16161e;
+    --surface-alt: #1c1c27;
+    --surface-raised: #22222e;
+    --border: #2e2e3d;
+    --border-subtle: #262635;
+    --text-primary: #e2e2ea;
+    --text-secondary: #8b8b9e;
+    --header-bg: #0d0d14;
+    --header-text: #c8c8d8;
+    --radius: 8px;
+    --primary-tint: #1a2240;
+    --secondary-tint: #251a3d;
+    --positive-tint: #122b1e;
+    --warning-tint: #2b2410;
+    --negative-tint: #2e1218;
+    --info-tint: #112233;
+    --neutral-tint: #1e1e28;
+    --inverse-tint: #28283a;
+    --focus-ring: rgba(120, 130, 220, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: #0e0e15;
+    color: var(--text-primary);
+    padding: 32px 24px;
+    line-height: 1.5;
+  }
+
+  .page-header {
+    max-width: 1400px;
+    margin: 0 auto 24px;
+  }
+  .page-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .page-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* Legend */
+  .legend {
+    max-width: 1400px;
+    margin: 0 auto 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Controls */
+  .controls {
+    max-width: 1400px;
+    margin: 0 auto 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .controls label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .controls select, .controls input[type="search"] {
+    font-size: 13px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-primary);
+    outline: none;
+  }
+  .controls select:focus, .controls input:focus {
+    border-color: #7882dc;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+  .controls input[type="search"] { width: 220px; }
+  .count-badge {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Table wrapper */
+  .table-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--header-bg);
+    color: var(--header-text);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    user-select: none;
+    cursor: pointer;
+  }
+  thead th:hover { background: #18182a; }
+  thead th .sort-arrow { opacity: 0.4; margin-left: 4px; font-size: 10px; }
+  thead th.sorted .sort-arrow { opacity: 1; }
+
+  tbody tr { transition: background 0.1s; }
+  tbody tr:hover { background: rgba(120,130,220,0.08) !important; }
+  tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  /* Token name styling */
+  .token-name {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    color: #a0aaf0;
+    background: #1e1e34;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  /* Prominence pills */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .pill-primary   { background: var(--primary-tint);   color: #8b9cf0; }
+  .pill-secondary { background: var(--secondary-tint); color: #b88de8; }
+  .pill-positive  { background: var(--positive-tint);  color: #5ec98a; }
+  .pill-warning   { background: var(--warning-tint);   color: #d4a94e; }
+  .pill-negative  { background: var(--negative-tint);  color: #f07070; }
+  .pill-info      { background: var(--info-tint);      color: #60b0e0; }
+  .pill-neutral   { background: var(--neutral-tint);   color: #9a9ab0; }
+  .pill-inverse   { background: var(--inverse-tint);   color: #c0c0d4; }
+
+  /* State badges */
+  .state-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .state-default  { background: #22222e; color: #8b8b9e; }
+  .state-hover    { background: #1a2240; color: #8b9cf0; }
+  .state-active   { background: #1e2748; color: #a0b0ff; }
+  .state-disabled { background: #1a1a22; color: #555568; }
+  .state-focus    { background: #2b2410; color: #d4a94e; }
+  .state-selected { background: #122b1e; color: #5ec98a; }
+
+  .desc { color: var(--text-secondary); font-size: 12px; white-space: normal; min-width: 200px; }
+
+  /* Row tints by prominence */
+  tr[data-prominence="primary"]   { background: rgba(26,34,64,0.35); }
+  tr[data-prominence="secondary"] { background: rgba(37,26,61,0.35); }
+  tr[data-prominence="positive"]  { background: rgba(18,43,30,0.35); }
+  tr[data-prominence="warning"]   { background: rgba(43,36,16,0.35); }
+  tr[data-prominence="negative"]  { background: rgba(46,18,24,0.35); }
+  tr[data-prominence="info"]      { background: rgba(17,34,51,0.35); }
+  tr[data-prominence="neutral"]   { background: rgba(30,30,40,0.35); }
+  tr[data-prominence="inverse"]   { background: rgba(40,40,58,0.35); }
+
+  .naming-ref {
+    max-width: 1400px;
+    margin: 20px auto 0;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+  }
+  .naming-ref h3 { font-size: 14px; margin-bottom: 8px; }
+  .naming-ref code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: #1e1e34;
+    color: #a0aaf0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .naming-ref .convention { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Color Design Tokens</h1>
+  <p>Core essentials (background, text, border, icon) across all prominence levels. Naming follows Polaris conventions with W3C DTCG-compatible dot notation.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Primary</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#b88de8"></div> Secondary</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#5ec98a"></div> Positive</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#d4a94e"></div> Warning</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#f07070"></div> Negative</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#60b0e0"></div> Info</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#9a9ab0"></div> Neutral</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#c0c0d4"></div> Inverse</div>
+</div>
+
+<div class="controls">
+  <label for="filterEl">Element</label>
+  <select id="filterEl"><option value="">All</option></select>
+  <label for="filterProm">Prominence</label>
+  <select id="filterProm"><option value="">All</option></select>
+  <label for="filterState">State</label>
+  <select id="filterState"><option value="">All</option></select>
+  <input type="search" id="searchBox" placeholder="Search tokens…">
+  <span class="count-badge" id="rowCount"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="tokenTable">
+    <thead>
+      <tr>
+        <th data-col="0">Token Name <span class="sort-arrow">▲</span></th>
+        <th data-col="1">Type <span class="sort-arrow">▲</span></th>
+        <th data-col="2">Element <span class="sort-arrow">▲</span></th>
+        <th data-col="3">Prominence <span class="sort-arrow">▲</span></th>
+        <th data-col="4">State <span class="sort-arrow">▲</span></th>
+        <th data-col="5">Description <span class="sort-arrow">▲</span></th>
+      </tr>
+    </thead>
+    <tbody id="tokenBody"></tbody>
+  </table>
+</div>
+
+<div class="naming-ref">
+  <h3>Naming Convention Reference</h3>
+  <div class="convention"><strong>Token pattern:</strong> <code>color.{element}.{prominence}[.{state}]</code></div>
+  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">Default state is omitted from the token name. For example, <code>color.bg.primary</code> implies default state, while <code>color.bg.primary.hover</code> is explicit.</div>
+</div>
+
+<script>
+const elements = [
+  {key:"bg",     label:"Background", hasStates: false},
+  {key:"text",   label:"Text",       hasStates: false},
+  {key:"link",   label:"Link",       hasStates: true},
+  {key:"border", label:"Border",     hasStates: false},
+  {key:"icon",   label:"Icon",       hasStates: true},
+];
+const prominences = ["primary","secondary","positive","warning","negative","info","neutral","inverse"];
+const states = ["default","hover","active","disabled","focus","selected"];
+
+// Generate token data
+const tokens = [];
+elements.forEach(el => {
+  prominences.forEach(prom => {
+    const applicableStates = el.hasStates ? states : ["default"];
+    applicableStates.forEach(st => {
+      const parts = ["color", el.key, prom];
+      if (st !== "default") parts.push(st);
+      const tokenName = parts.join(".");
+      let desc = `${prom.charAt(0).toUpperCase()+prom.slice(1)} ${el.label.toLowerCase()}`;
+      if (st !== "default") desc += ` in ${st} state`;
+      tokens.push({
+        tokenName, type: "color",
+        element: el.label,
+        prominence: prom,
+        state: st.charAt(0).toUpperCase()+st.slice(1),
+        desc
+      });
+    });
+  });
+});
+
+// Populate filter dropdowns
+function populateSelect(id, values) {
+  const sel = document.getElementById(id);
+  values.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v.charAt(0).toUpperCase()+v.slice(1);
+    sel.appendChild(opt);
+  });
+}
+populateSelect("filterEl", elements.map(e=>e.label.toLowerCase()));
+populateSelect("filterProm", prominences);
+populateSelect("filterState", states);
+
+function renderRows(data) {
+  const tbody = document.getElementById("tokenBody");
+  tbody.innerHTML = data.map(t => `
+    <tr data-prominence="${t.prominence}">
+      <td><span class="token-name">${t.tokenName}</span></td>
+      <td>${t.type}</td>
+      <td>${t.element}</td>
+      <td><span class="pill pill-${t.prominence}">${t.prominence.charAt(0).toUpperCase()+t.prominence.slice(1)}</span></td>
+      <td><span class="state-badge state-${t.state.toLowerCase()}">${t.state}</span></td>
+      <td class="desc">${t.desc}</td>
+    </tr>
+  `).join("");
+  document.getElementById("rowCount").textContent = `${data.length} of ${tokens.length} tokens`;
+}
+
+function applyFilters() {
+  const el = document.getElementById("filterEl").value;
+  const prom = document.getElementById("filterProm").value;
+  const st = document.getElementById("filterState").value;
+  const q = document.getElementById("searchBox").value.toLowerCase();
+  const filtered = tokens.filter(t => {
+    if (el && t.element.toLowerCase() !== el) return false;
+    if (prom && t.prominence !== prom) return false;
+    if (st && t.state.toLowerCase() !== st) return false;
+    if (q && !t.tokenName.includes(q) && !t.desc.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  renderRows(filtered);
+}
+
+document.querySelectorAll(".controls select, .controls input").forEach(el => {
+  el.addEventListener("change", applyFilters);
+  el.addEventListener("input", applyFilters);
+});
+
+// Column sorting
+let sortCol = -1, sortAsc = true;
+document.querySelectorAll("thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = parseInt(th.dataset.col);
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    document.querySelectorAll("thead th").forEach(h => h.classList.remove("sorted"));
+    th.classList.add("sorted");
+    th.querySelector(".sort-arrow").textContent = sortAsc ? "▲" : "▼";
+    const keys = ["tokenName","type","element","prominence","state","desc"];
+    tokens.sort((a,b) => {
+      const va = a[keys[col]], vb = b[keys[col]];
+      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+    applyFilters();
+  });
+});
+
+renderRows(tokens);
+</script>
+</body>
+</html>

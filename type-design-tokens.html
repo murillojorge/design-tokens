@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typeface Design Tokens — Primitives</title>
+<style>
+  :root {
+    --surface: #16161e;
+    --surface-alt: #1c1c27;
+    --surface-raised: #22222e;
+    --border: #2e2e3d;
+    --text-primary: #e2e2ea;
+    --text-secondary: #8b8b9e;
+    --header-bg: #0d0d14;
+    --header-text: #c8c8d8;
+    --radius: 8px;
+    --focus-ring: rgba(120, 130, 220, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: #0e0e15;
+    color: var(--text-primary);
+    padding: 32px 24px;
+    line-height: 1.5;
+  }
+
+  .page-header { max-width: 1400px; margin: 0 auto 24px; }
+  .page-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 14px; color: var(--text-secondary); }
+
+  /* Legend */
+  .legend {
+    max-width: 1400px;
+    margin: 0 auto 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 4px;
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .legend-swatch {
+    width: 12px; height: 12px; border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Controls */
+  .controls {
+    max-width: 1400px; margin: 0 auto 16px;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .controls label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .controls select, .controls input[type="search"] {
+    font-size: 13px; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: var(--surface); color: var(--text-primary); outline: none;
+  }
+  .controls select:focus, .controls input:focus {
+    border-color: #7882dc; box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+  .controls input[type="search"] { width: 220px; }
+  .count-badge {
+    margin-left: auto; font-size: 13px;
+    color: var(--text-secondary); font-variant-numeric: tabular-nums;
+  }
+
+  /* Table */
+  .table-wrap {
+    max-width: 1400px; margin: 0 auto;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+  thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--header-bg); color: var(--header-text);
+    font-weight: 600; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 12px 14px; text-align: left;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    user-select: none; cursor: pointer;
+  }
+  thead th:hover { background: #18182a; }
+  thead th .sort-arrow { opacity: 0.4; margin-left: 4px; font-size: 10px; }
+  thead th.sorted .sort-arrow { opacity: 1; }
+  tbody tr { transition: background 0.1s; }
+  tbody tr:hover { background: rgba(120,130,220,0.08) !important; }
+  tbody td {
+    padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle;
+  }
+
+  .token-name {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px; color: #a0aaf0; background: #1e1e34;
+    padding: 3px 8px; border-radius: 4px; display: inline-block;
+  }
+
+  /* Element pills */
+  .pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500;
+  }
+  .pill-family     { background: rgba(37,26,61,0.6);  color: #b88de8; }
+  .pill-size       { background: rgba(26,34,64,0.6);  color: #8b9cf0; }
+  .pill-weight     { background: rgba(46,18,24,0.6);  color: #f07070; }
+  .pill-lineHeight { background: rgba(18,43,30,0.6);  color: #5ec98a; }
+  .pill-spacing    { background: rgba(43,36,16,0.6);  color: #d4a94e; }
+  .pill-decoration { background: rgba(17,34,51,0.6);  color: #60b0e0; }
+
+  /* Value display */
+  .val { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #d4a94e; }
+
+  /* Preview */
+  .preview {
+    white-space: normal; min-width: 80px; max-width: 200px;
+    color: var(--text-primary); overflow: hidden;
+  }
+
+  .desc { color: var(--text-secondary); font-size: 12px; white-space: normal; min-width: 160px; }
+
+  /* Row tints by element */
+  tr[data-element="family"]     { background: rgba(37,26,61,0.2); }
+  tr[data-element="size"]       { background: rgba(26,34,64,0.2); }
+  tr[data-element="weight"]     { background: rgba(46,18,24,0.2); }
+  tr[data-element="lineHeight"] { background: rgba(18,43,30,0.2); }
+  tr[data-element="spacing"]    { background: rgba(43,36,16,0.2); }
+  tr[data-element="decoration"] { background: rgba(17,34,51,0.2); }
+
+  .naming-ref {
+    max-width: 1400px; margin: 20px auto 0; padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); font-size: 13px;
+  }
+  .naming-ref h3 { font-size: 14px; margin-bottom: 8px; }
+  .naming-ref code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: #1e1e34; color: #a0aaf0;
+    padding: 2px 6px; border-radius: 3px; font-size: 12px;
+  }
+  .naming-ref .convention { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Typeface Design Tokens — Primitives</h1>
+  <p>Atomic typographic tokens. Each resolves to a single CSS value and can be composed into semantic styles at the component level.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#b88de8"></div> Family</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Size</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#f07070"></div> Weight</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#5ec98a"></div> Line Height</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#d4a94e"></div> Spacing</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#60b0e0"></div> Decoration</div>
+</div>
+
+<div class="controls">
+  <label for="filterEl">Element</label>
+  <select id="filterEl"><option value="">All</option></select>
+  <input type="search" id="searchBox" placeholder="Search tokens…">
+  <span class="count-badge" id="rowCount"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="tokenTable">
+    <thead>
+      <tr>
+        <th data-col="0">Token Name <span class="sort-arrow">▲</span></th>
+        <th data-col="1">Type <span class="sort-arrow">▲</span></th>
+        <th data-col="2">Element <span class="sort-arrow">▲</span></th>
+        <th data-col="3">Prominence <span class="sort-arrow">▲</span></th>
+        <th data-col="4">Value <span class="sort-arrow">▲</span></th>
+        <th data-col="5">Preview <span class="sort-arrow">▲</span></th>
+        <th data-col="6">Description <span class="sort-arrow">▲</span></th>
+      </tr>
+    </thead>
+    <tbody id="tokenBody"></tbody>
+  </table>
+</div>
+
+<div class="naming-ref">
+  <h3>Naming Convention Reference</h3>
+  <div class="convention"><strong>Token pattern:</strong> <code>type.{element}.{prominence}</code></div>
+  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">Primitive tokens are the lowest tier. Each maps to one CSS property value. Semantic tokens (e.g. heading, body, caption) compose these primitives — for example, an H1 style might reference <code>type.family.default</code> + <code>type.size.40</code> + <code>type.weight.700</code> + <code>type.lineHeight.120</code>.</div>
+</div>
+
+<script>
+// ── Primitive definitions ─────────────────────────────────────────────────
+const groups = [
+  {
+    element: "family",
+    label: "Family",
+    css: "font-family",
+    tokens: [
+      { key: "default", label: "Default", value: "Gothic",    desc: "Default sans-serif typeface" },
+      { key: "mono",    label: "Mono",    value: "monospace", desc: "Monospaced typeface for code" },
+      { key: "serif",   label: "Serif",   value: "serif",     desc: "Serif typeface for long-form" },
+    ]
+  },
+  {
+    element: "size",
+    label: "Size",
+    css: "font-size",
+    tokens: [
+      { key: "11", label: "11", value: "11px", desc: "Extra small — footnotes, fine print" },
+      { key: "12", label: "12", value: "12px", desc: "Small captions, metadata" },
+      { key: "14", label: "14", value: "14px", desc: "Small body text, secondary labels" },
+      { key: "16", label: "16", value: "16px", desc: "Base body size" },
+      { key: "18", label: "18", value: "18px", desc: "Large body, lead text" },
+      { key: "20", label: "20", value: "20px", desc: "H6 / small subheading" },
+      { key: "24", label: "24", value: "24px", desc: "H5 / subheading" },
+      { key: "28", label: "28", value: "28px", desc: "H4 / section heading" },
+      { key: "32", label: "32", value: "32px", desc: "H3 / mid heading" },
+      { key: "40", label: "40", value: "40px", desc: "H2 / major heading" },
+      { key: "48", label: "48", value: "48px", desc: "H1 / page title" },
+      { key: "56", label: "56", value: "56px", desc: "Display small" },
+      { key: "64", label: "64", value: "64px", desc: "Display large / hero" },
+    ]
+  },
+  {
+    element: "weight",
+    label: "Weight",
+    css: "font-weight",
+    tokens: [
+      { key: "400", label: "400", value: "400", desc: "Regular — body text" },
+      { key: "500", label: "500", value: "500", desc: "Medium — labels, UI elements" },
+      { key: "600", label: "600", value: "600", desc: "Semibold — subheadings" },
+      { key: "700", label: "700", value: "700", desc: "Bold — headings, emphasis" },
+    ]
+  },
+  {
+    element: "lineHeight",
+    label: "Line Height",
+    css: "line-height",
+    tokens: [
+      { key: "100", label: "100", value: "1.0",  desc: "None — single line elements, icons" },
+      { key: "120", label: "120", value: "1.2",  desc: "Tight — display and large headings" },
+      { key: "130", label: "130", value: "1.3",  desc: "Snug — mid-size headings" },
+      { key: "140", label: "140", value: "1.4",  desc: "Normal — subheadings, labels" },
+      { key: "150", label: "150", value: "1.5",  desc: "Comfortable — body text" },
+      { key: "160", label: "160", value: "1.6",  desc: "Relaxed — long-form reading" },
+    ]
+  },
+  {
+    element: "spacing",
+    label: "Spacing",
+    css: "letter-spacing",
+    tokens: [
+      { key: "0",   label: "0",   value: "0em",      desc: "None — default tracking" },
+      { key: "5",   label: "5",   value: "0.005em",   desc: "Subtle — body fine-tuning" },
+      { key: "10",  label: "10",  value: "0.01em",    desc: "Slight — small text clarity" },
+      { key: "15",  label: "15",  value: "0.015em",   desc: "Moderate — labels and captions" },
+      { key: "20",  label: "20",  value: "0.02em",    desc: "Open — uppercase headings" },
+      { key: "50",  label: "50",  value: "0.05em",    desc: "Wide — overlines, allcaps UI" },
+      { key: "100", label: "100", value: "0.1em",     desc: "Extra wide — decorative, display" },
+    ]
+  },
+  {
+    element: "decoration",
+    label: "Decoration",
+    css: "text-decoration",
+    tokens: [
+      { key: "none",        label: "None",        value: "none",         desc: "No decoration" },
+      { key: "underline",   label: "Underline",   value: "underline",    desc: "Underline — links, emphasis" },
+      { key: "lineThrough", label: "Line Through", value: "line-through", desc: "Strikethrough — deleted, deprecated" },
+    ]
+  },
+];
+
+// ── Generate flat token list ──────────────────────────────────────────────
+const tokens = [];
+groups.forEach(g => {
+  g.tokens.forEach(t => {
+    tokens.push({
+      tokenName: `type.${g.element}.${t.key}`,
+      type: "typography",
+      element: g.element,
+      elementLabel: g.label,
+      prominence: t.key,
+      prominenceLabel: t.label,
+      value: t.value,
+      css: g.css,
+      desc: t.desc,
+    });
+  });
+});
+
+// ── Filters ───────────────────────────────────────────────────────────────
+function populateSelect(id, values) {
+  const sel = document.getElementById(id);
+  values.forEach(([v, l]) => {
+    const opt = document.createElement("option");
+    opt.value = v; opt.textContent = l;
+    sel.appendChild(opt);
+  });
+}
+populateSelect("filterEl", groups.map(g => [g.element, g.label]));
+
+// ── Render ────────────────────────────────────────────────────────────────
+function previewHTML(t) {
+  const sample = "The quick brown fox";
+  switch (t.element) {
+    case "family":
+      return `<span style="font-family:${t.value};font-size:16px">${sample}</span>`;
+    case "size": {
+      const clamped = Math.min(parseInt(t.value), 32);
+      return `<span style="font-size:${clamped}px">Aa</span>`;
+    }
+    case "weight":
+      return `<span style="font-weight:${t.value};font-size:16px">Aa Bb Cc</span>`;
+    case "lineHeight":
+      return `<span style="font-size:13px;line-height:${t.value};display:inline-block;max-width:140px;white-space:normal">Two lines of sample text.</span>`;
+    case "spacing":
+      return `<span style="font-size:13px;letter-spacing:${t.value}">SPACING</span>`;
+    case "decoration":
+      return `<span style="font-size:14px;text-decoration:${t.value}">Decorated text</span>`;
+    default:
+      return "—";
+  }
+}
+
+function renderRows(data) {
+  const tbody = document.getElementById("tokenBody");
+  tbody.innerHTML = data.map(t => `
+    <tr data-element="${t.element}">
+      <td><span class="token-name">${t.tokenName}</span></td>
+      <td>${t.type}</td>
+      <td><span class="pill pill-${t.element}">${t.elementLabel}</span></td>
+      <td>${t.prominenceLabel}</td>
+      <td><span class="val">${t.value}</span></td>
+      <td class="preview">${previewHTML(t)}</td>
+      <td class="desc">${t.desc}</td>
+    </tr>
+  `).join("");
+  document.getElementById("rowCount").textContent = `${data.length} of ${tokens.length} tokens`;
+}
+
+function applyFilters() {
+  const el = document.getElementById("filterEl").value;
+  const q = document.getElementById("searchBox").value.toLowerCase();
+  const filtered = tokens.filter(t => {
+    if (el && t.element !== el) return false;
+    if (q && !t.tokenName.includes(q) && !t.desc.toLowerCase().includes(q) && !t.value.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  renderRows(filtered);
+}
+
+document.querySelectorAll(".controls select, .controls input").forEach(el => {
+  el.addEventListener("change", applyFilters);
+  el.addEventListener("input", applyFilters);
+});
+
+// ── Sorting ───────────────────────────────────────────────────────────────
+let sortCol = -1, sortAsc = true;
+document.querySelectorAll("thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = parseInt(th.dataset.col);
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    document.querySelectorAll("thead th").forEach(h => h.classList.remove("sorted"));
+    th.classList.add("sorted");
+    th.querySelector(".sort-arrow").textContent = sortAsc ? "▲" : "▼";
+    const keys = ["tokenName","type","element","prominence","value","value","desc"];
+    tokens.sort((a, b) => {
+      const va = a[keys[col]], vb = b[keys[col]];
+      return sortAsc ? va.localeCompare(vb, undefined, {numeric: true}) : vb.localeCompare(va, undefined, {numeric: true});
+    });
+    applyFilters();
+  });
+});
+
+renderRows(tokens);
+</script>
+</body>
+</html>

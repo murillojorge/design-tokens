@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button Component Tokens</title>
+<style>
+  :root {
+    --surface: #16161e;
+    --surface-alt: #1c1c27;
+    --surface-raised: #22222e;
+    --border: #2e2e3d;
+    --text-primary: #e2e2ea;
+    --text-secondary: #8b8b9e;
+    --header-bg: #0d0d14;
+    --header-text: #c8c8d8;
+    --radius: 8px;
+    --focus-ring: rgba(120, 130, 220, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: #0e0e15;
+    color: var(--text-primary);
+    padding: 32px 24px;
+    line-height: 1.5;
+  }
+
+  .page-header { max-width: 1400px; margin: 0 auto 24px; }
+  .page-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 14px; color: var(--text-secondary); }
+
+  /* Legend */
+  .legend {
+    max-width: 1400px; margin: 0 auto 16px;
+    display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px;
+  }
+  .legend-group {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .legend-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.4px; color: var(--text-secondary); margin-right: 2px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: 4px;
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .legend-swatch {
+    width: 12px; height: 12px; border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .legend-divider {
+    width: 1px; height: 20px; background: var(--border); margin: 0 6px;
+  }
+
+  /* Controls */
+  .controls {
+    max-width: 1400px; margin: 0 auto 16px;
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .controls label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .controls select, .controls input[type="search"] {
+    font-size: 13px; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 6px;
+    background: var(--surface); color: var(--text-primary); outline: none;
+  }
+  .controls select:focus, .controls input:focus {
+    border-color: #7882dc; box-shadow: 0 0 0 2px var(--focus-ring);
+  }
+  .controls input[type="search"] { width: 220px; }
+  .count-badge {
+    margin-left: auto; font-size: 13px;
+    color: var(--text-secondary); font-variant-numeric: tabular-nums;
+  }
+
+  /* Table */
+  .table-wrap {
+    max-width: 1400px; margin: 0 auto;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+  thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--header-bg); color: var(--header-text);
+    font-weight: 600; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 12px 14px; text-align: left;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    user-select: none; cursor: pointer;
+  }
+  thead th:hover { background: #18182a; }
+  thead th .sort-arrow { opacity: 0.4; margin-left: 4px; font-size: 10px; }
+  thead th.sorted .sort-arrow { opacity: 1; }
+  tbody tr { transition: background 0.1s; }
+  tbody tr:hover { background: rgba(120,130,220,0.08) !important; }
+  tbody td {
+    padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle;
+  }
+
+  .token-name {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px; color: #a0aaf0; background: #1e1e34;
+    padding: 3px 8px; border-radius: 4px; display: inline-block;
+  }
+
+  /* Element pills */
+  .pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500;
+  }
+  .pill-bg       { background: rgba(26,34,64,0.6);  color: #8b9cf0; }
+  .pill-text     { background: rgba(18,43,30,0.6);  color: #5ec98a; }
+  .pill-border   { background: rgba(43,36,16,0.6);  color: #d4a94e; }
+  .pill-icon     { background: rgba(37,26,61,0.6);  color: #b88de8; }
+  .pill-fontSize { background: rgba(17,34,51,0.6);  color: #60b0e0; }
+  .pill-fontWeight { background: rgba(46,18,24,0.6); color: #f07070; }
+
+  /* Prominence pills */
+  .prom-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500;
+  }
+  .prom-primary       { background: rgba(26,34,64,0.5);  color: #8b9cf0; }
+  .prom-secondary     { background: rgba(37,26,61,0.5);  color: #b88de8; }
+  .prom-cta           { background: rgba(18,43,30,0.5);  color: #5ec98a; }
+  .prom-destructive   { background: rgba(46,18,24,0.5);  color: #f07070; }
+  .prom-highContrast  { background: rgba(40,40,58,0.5);  color: #c0c0d4; }
+
+  /* State badges */
+  .state-badge {
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
+  }
+  .state-default  { background: #22222e; color: #8b8b9e; }
+  .state-hover    { background: #1a2240; color: #8b9cf0; }
+  .state-active   { background: #1e2748; color: #a0b0ff; }
+  .state-disabled { background: #1a1a22; color: #555568; }
+  .state-focus    { background: #2b2410; color: #d4a94e; }
+
+  /* Size badges */
+  .size-badge {
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
+    background: #22222e; color: #8b8b9e;
+  }
+
+  .val { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #d4a94e; }
+  .desc { color: var(--text-secondary); font-size: 12px; white-space: normal; min-width: 160px; }
+
+  /* Row tints by prominence */
+  tr[data-prominence="primary"]      { background: rgba(26,34,64,0.2); }
+  tr[data-prominence="secondary"]    { background: rgba(37,26,61,0.2); }
+  tr[data-prominence="cta"]          { background: rgba(18,43,30,0.2); }
+  tr[data-prominence="destructive"]  { background: rgba(46,18,24,0.2); }
+  tr[data-prominence="highContrast"] { background: rgba(40,40,58,0.2); }
+
+  .naming-ref {
+    max-width: 1400px; margin: 20px auto 0; padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); font-size: 13px;
+  }
+  .naming-ref h3 { font-size: 14px; margin-bottom: 8px; }
+  .naming-ref code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: #1e1e34; color: #a0aaf0;
+    padding: 2px 6px; border-radius: 3px; font-size: 12px;
+  }
+  .naming-ref .convention { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Button Component Tokens</h1>
+  <p>Component-level tokens for the button element. Each references primitive color and type tokens. Covers primary, secondary, CTA, destructive, and high-contrast variants across default and small sizes.</p>
+</div>
+
+<div class="legend">
+  <div class="legend-group">
+    <span class="legend-label">Prominence</span>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Primary</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#b88de8"></div> Secondary</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#5ec98a"></div> CTA</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#f07070"></div> Destructive</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#c0c0d4"></div> High-Contrast</div>
+  </div>
+  <div class="legend-divider"></div>
+  <div class="legend-group">
+    <span class="legend-label">Element</span>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Bg</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#5ec98a"></div> Text</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#d4a94e"></div> Border</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#b88de8"></div> Icon</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#60b0e0"></div> Font Size</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#f07070"></div> Font Weight</div>
+  </div>
+</div>
+
+<div class="controls">
+  <label for="filterProm">Prominence</label>
+  <select id="filterProm"><option value="">All</option></select>
+  <label for="filterEl">Element</label>
+  <select id="filterEl"><option value="">All</option></select>
+  <label for="filterSize">Size</label>
+  <select id="filterSize"><option value="">All</option></select>
+  <label for="filterState">State</label>
+  <select id="filterState"><option value="">All</option></select>
+  <input type="search" id="searchBox" placeholder="Search tokens…">
+  <span class="count-badge" id="rowCount"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="tokenTable">
+    <thead>
+      <tr>
+        <th data-col="0">Token Name <span class="sort-arrow">▲</span></th>
+        <th data-col="1">Type <span class="sort-arrow">▲</span></th>
+        <th data-col="2">Element <span class="sort-arrow">▲</span></th>
+        <th data-col="3">Prominence <span class="sort-arrow">▲</span></th>
+        <th data-col="4">Size <span class="sort-arrow">▲</span></th>
+        <th data-col="5">State <span class="sort-arrow">▲</span></th>
+        <th data-col="6">Description <span class="sort-arrow">▲</span></th>
+      </tr>
+    </thead>
+    <tbody id="tokenBody"></tbody>
+  </table>
+</div>
+
+<div class="naming-ref">
+  <h3>Naming Convention Reference</h3>
+  <div class="convention"><strong>Token pattern:</strong> <code>button.{element}.{prominence}[.{size}][.{state}]</code></div>
+  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">Component tokens sit above primitives and below compositions. Default size and default state are omitted — <code>button.bg.primary</code> is the default-size, default-state background. Typography elements (fontSize, fontWeight) vary by size but not by state. Color elements (bg, text, border, icon) vary by state but share values across sizes.</div>
+</div>
+
+<script>
+// ── Definitions ───────────────────────────────────────────────────────────
+const prominences = ["primary", "secondary", "cta", "destructive", "highContrast"];
+const promLabels  = { primary: "Primary", secondary: "Secondary", cta: "CTA", destructive: "Destructive", highContrast: "High-Contrast" };
+const sizes       = ["default", "small"];
+const states      = ["default", "hover", "active", "disabled", "focus"];
+
+// Color elements carry states, not sizes
+// Typography elements carry sizes, not states
+const elements = [
+  { key: "bg",         label: "Bg",          group: "color" },
+  { key: "text",       label: "Text",        group: "color" },
+  { key: "border",     label: "Border",      group: "color" },
+  { key: "icon",       label: "Icon",        group: "color" },
+  { key: "fontSize",   label: "Font Size",   group: "type" },
+  { key: "fontWeight", label: "Font Weight",  group: "type" },
+];
+
+// ── Generate tokens ───────────────────────────────────────────────────────
+const tokens = [];
+
+prominences.forEach(prom => {
+  elements.forEach(el => {
+    if (el.group === "color") {
+      // Color elements: vary by state, no size dimension
+      states.forEach(st => {
+        const parts = ["button", el.key, prom];
+        if (st !== "default") parts.push(st);
+        const tokenName = parts.join(".");
+        let desc = `Button ${el.label.toLowerCase()} — ${promLabels[prom]}`;
+        if (st !== "default") desc += `, ${st} state`;
+        tokens.push({
+          tokenName,
+          type: "component",
+          element: el.key,
+          elementLabel: el.label,
+          prominence: prom,
+          promLabel: promLabels[prom],
+          size: "—",
+          sizeKey: "",
+          state: st.charAt(0).toUpperCase() + st.slice(1),
+          stateKey: st,
+          desc,
+        });
+      });
+    } else {
+      // Type elements: vary by size, no state dimension
+      sizes.forEach(sz => {
+        const parts = ["button", el.key, prom];
+        if (sz !== "default") parts.push(sz);
+        const tokenName = parts.join(".");
+        let desc = `Button ${el.label.toLowerCase()} — ${promLabels[prom]}`;
+        if (sz !== "default") desc += `, ${sz} size`;
+        tokens.push({
+          tokenName,
+          type: "component",
+          element: el.key,
+          elementLabel: el.label,
+          prominence: prom,
+          promLabel: promLabels[prom],
+          size: sz.charAt(0).toUpperCase() + sz.slice(1),
+          sizeKey: sz,
+          state: "—",
+          stateKey: "",
+          desc,
+        });
+      });
+    }
+  });
+});
+
+// ── Filters ───────────────────────────────────────────────────────────────
+function populateSelect(id, values) {
+  const sel = document.getElementById(id);
+  values.forEach(([v, l]) => {
+    const opt = document.createElement("option");
+    opt.value = v; opt.textContent = l;
+    sel.appendChild(opt);
+  });
+}
+populateSelect("filterProm", prominences.map(p => [p, promLabels[p]]));
+populateSelect("filterEl", elements.map(e => [e.key, e.label]));
+populateSelect("filterSize", sizes.map(s => [s, s.charAt(0).toUpperCase() + s.slice(1)]));
+populateSelect("filterState", states.map(s => [s, s.charAt(0).toUpperCase() + s.slice(1)]));
+
+// ── Render ────────────────────────────────────────────────────────────────
+function renderRows(data) {
+  const tbody = document.getElementById("tokenBody");
+  tbody.innerHTML = data.map(t => `
+    <tr data-prominence="${t.prominence}">
+      <td><span class="token-name">${t.tokenName}</span></td>
+      <td>${t.type}</td>
+      <td><span class="pill pill-${t.element}">${t.elementLabel}</span></td>
+      <td><span class="prom-pill prom-${t.prominence}">${t.promLabel}</span></td>
+      <td>${t.size !== "—" ? `<span class="size-badge">${t.size}</span>` : '<span style="color:#555568">—</span>'}</td>
+      <td>${t.stateKey ? `<span class="state-badge state-${t.stateKey}">${t.state}</span>` : '<span style="color:#555568">—</span>'}</td>
+      <td class="desc">${t.desc}</td>
+    </tr>
+  `).join("");
+  document.getElementById("rowCount").textContent = `${data.length} of ${tokens.length} tokens`;
+}
+
+function applyFilters() {
+  const prom  = document.getElementById("filterProm").value;
+  const el    = document.getElementById("filterEl").value;
+  const sz    = document.getElementById("filterSize").value;
+  const st    = document.getElementById("filterState").value;
+  const q     = document.getElementById("searchBox").value.toLowerCase();
+  const filtered = tokens.filter(t => {
+    if (prom && t.prominence !== prom) return false;
+    if (el && t.element !== el) return false;
+    if (sz && t.sizeKey !== sz) return false;
+    if (st && t.stateKey !== st) return false;
+    if (q && !t.tokenName.includes(q) && !t.desc.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  renderRows(filtered);
+}
+
+document.querySelectorAll(".controls select, .controls input").forEach(el => {
+  el.addEventListener("change", applyFilters);
+  el.addEventListener("input", applyFilters);
+});
+
+// ── Sorting ───────────────────────────────────────────────────────────────
+let sortCol = -1, sortAsc = true;
+document.querySelectorAll("thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = parseInt(th.dataset.col);
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    document.querySelectorAll("thead th").forEach(h => h.classList.remove("sorted"));
+    th.classList.add("sorted");
+    th.querySelector(".sort-arrow").textContent = sortAsc ? "▲" : "▼";
+    const keys = ["tokenName","type","element","prominence","size","state","desc"];
+    tokens.sort((a, b) => {
+      const va = a[keys[col]], vb = b[keys[col]];
+      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+    applyFilters();
+  });
+});
+
+renderRows(tokens);
+</script>
+</body>
+</html>
