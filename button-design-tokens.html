@@ -113,7 +113,7 @@
     display: inline-block; padding: 3px 10px; border-radius: 12px;
     font-size: 12px; font-weight: 500;
   }
-  .pill-bg       { background: rgba(26,34,64,0.6);  color: #8b9cf0; }
+  .pill-background { background: rgba(26,34,64,0.6);  color: #8b9cf0; }
   .pill-text     { background: rgba(18,43,30,0.6);  color: #5ec98a; }
   .pill-border   { background: rgba(43,36,16,0.6);  color: #d4a94e; }
   .pill-icon     { background: rgba(37,26,61,0.6);  color: #b88de8; }
@@ -190,7 +190,7 @@
   <div class="legend-divider"></div>
   <div class="legend-group">
     <span class="legend-label">Element</span>
-    <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Bg</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8b9cf0"></div> Background</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#5ec98a"></div> Text</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#d4a94e"></div> Border</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#b88de8"></div> Icon</div>
@@ -232,7 +232,7 @@
 <div class="naming-ref">
   <h3>Naming Convention Reference</h3>
   <div class="convention"><strong>Token pattern:</strong> <code>button.{element}.{prominence}[.{size}][.{state}]</code></div>
-  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">Component tokens sit above primitives and below compositions. Default size and default state are omitted — <code>button.bg.primary</code> is the default-size, default-state background. Typography elements (fontSize, fontWeight) vary by size but not by state. Color elements (bg, text, border, icon) vary by state but share values across sizes.</div>
+  <div class="convention" style="margin-top:8px; color: var(--text-secondary);">Component tokens sit above primitives and below compositions. Default size and default state are omitted — <code>button.background.primary</code> is the default-size, default-state background. Typography elements (fontSize, fontWeight) vary by size but not by state. Color elements (background, text, border, icon) vary by state but share values across sizes.</div>
 </div>
 
 <script>
@@ -245,7 +245,7 @@ const states      = ["default", "hover", "active", "disabled", "focus"];
 // Color elements carry states, not sizes
 // Typography elements carry sizes, not states
 const elements = [
-  { key: "bg",         label: "Bg",          group: "color" },
+  { key: "background", label: "Background",   group: "color" },
   { key: "text",       label: "Text",        group: "color" },
   { key: "border",     label: "Border",      group: "color" },
   { key: "icon",       label: "Icon",        group: "color" },
